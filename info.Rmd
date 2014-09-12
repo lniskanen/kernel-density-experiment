@@ -1,0 +1,36 @@
+
+# Introduction
+
+This is applications enables visualization of the effects of different [KDE functions](https://en.wikipedia.org/wiki/Kernel_density_estimation) and bandwidth relative to tradional histograms.
+You can also upload your own CSV file instead of using default iris data. Data is centered and scaled.
+
+## Usage
+
+
+### Plot tab
+
+Main view to visualize KDE and histograms
+
+- Adjust histogram bin width
+- Select KDE smoothener function
+- Adjust bandwidth of the KDE function
+
+
+### Upload tab
+
+Set your parameters according to format of your CSV file.
+
+- Select separator character as in your CSV file
+- Select appropriate quote character if any used in CSV file
+- Select which column number is used from your data, default first column
+- Upload your file
+- _Go to back Plot tab to refresh your plot_
+
+**Note: there's no error checking on your input CSV file !**
+
+
+
+### Known issues
+
+- To be discovered by users  :-)
+
