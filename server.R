@@ -11,11 +11,11 @@ defaultData<-function(){
        
         Petal.Length<-rep(scale(iris$Petal.Length),length(kerns))
         kernels<-rep(kerns,each=length(iris$Petal.Length))
-        data<-cbind(Petal.Length,kernels)
-        data<-as.data.frame(data)
-        data$Petal.Length<-as.character(data$Petal.Length)
-        data$Petal.Length<-as.numeric(data$Petal.Length)
-        data
+        df<-cbind(Petal.Length,kernels)
+        df<-as.data.frame(df)
+        df$Petal.Length<-as.character(df$Petal.Length)
+        df$Petal.Length<-as.numeric(df$Petal.Length)
+        df
 }
 
 readUploaded<-function(filePath,separator,quote,column,session){
@@ -26,11 +26,11 @@ readUploaded<-function(filePath,separator,quote,column,session){
         
         longCol<-rep(file[,column],length(kerns))
         kernelsCol<-rep(kerns,each=length(file[,column]))
-        data<-cbind(longCol,kernelsCol)
-        data<-as.data.frame(data)
-        data$longCol<-as.character(data$longCol)
-        data$longCol<-as.numeric(data$longCol)
-        data
+        df<-cbind(longCol,kernelsCol)
+        df<-as.data.frame(df)
+        df$longCol<-as.character(df$longCol)
+        df$longCol<-as.numeric(df$longCol)
+        df
 }
 
 shinyServer(
@@ -38,14 +38,14 @@ shinyServer(
 
                 output$plot <- renderPlot({
                         
-                        data<-data.frame()
+                        histData<-data.frame()
                         
                         upFile <- input$upfile
                         if (is.null(upFile)){
-                                data<<-defaultData()
+                                histData<<-defaultData()
                         }else{
 
-                                data<<-readUploaded(upFile$datapath, input$separator,input$quote,input$column,session)
+                                histData<<-readUploaded(upFile$datapath, input$separator,input$quote,input$column,session)
                         }
                         
                         
@@ -57,10 +57,10 @@ shinyServer(
                       
                         
                         ggplot()+
-                                geom_histogram(data=data,aes(x=data[,1],y=..density..),   
+                                geom_histogram(data=histData,aes(x=histData[,1],y=..density..),   
                                                binwidth=input$histbin,
                                                colour="black", fill="white")+
-                                stat_density(data=data,aes(x=data[,1]),kernel=input$kde,alpha=0.8,adjust=input$kdeadjust)+
+                                stat_density(data=histData,aes(x=histData[,1]),kernel=input$kde,alpha=0.8,adjust=input$kdeadjust)+
                                 ggtitle("Experiment with different KDE functions and bandwidths")+
                                 annotate("text",x=c(Inf,Inf,Inf),y=c(Inf,Inf,Inf),hjust=c(1.5,1.5,1.5),vjust=c(3.0,4.5,6.0),
                                          label=c(histTxt,kdeTxt,kernelTxt),family ="serif", 
